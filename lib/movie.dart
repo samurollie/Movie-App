@@ -26,8 +26,6 @@ class Movie {
     this.country,
     this.awards,
   });
-  // Future filmes =
-  //     http.get('http://www.omdbapi.com/?apikey=5cd3eeca&t=$title');
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(

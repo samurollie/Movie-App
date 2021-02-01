@@ -11,9 +11,17 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     final String _movieTitle = ModalRoute.of(context).settings.arguments;
 
-    Future<http.Response> createMovie(String title) {
+    /* Future<http.Response> createMovie(String title) {
       return http.get('http://www.omdbapi.com/?apikey=5cd3eeca&t=$title');
-    }
+    } 
+      // Future filmes =
+  //     http.get('http://www.omdbapi.com/?apikey=5cd3eeca&t=$title');
+    
+    */
+
+    /**
+     * terminar esse ngc daqui (Pegar o resultado do get e passar por coisa do movie.dart) pra retornar o Map com os resultados 
+     */
 
     return Scaffold(
       appBar: AppBar(
