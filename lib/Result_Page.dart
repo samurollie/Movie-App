@@ -28,15 +28,36 @@ class _ResultPageState extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
-    futuraLista = _getMovieList();
+
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        this.search = ModalRoute.of(context).settings.arguments;
+      });
+      print(this.search);
+      // _yourFunction(args);
+      futuraLista = _getMovieList();
+    });
 
     print(futuraLista);
   }
 
+  Widget listaDeFilmes() {
+    return ListView.builder(
+      padding: EdgeInsets.all(16.0),
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(
+            "resultado.movies[index].title,",
+            style: TextStyle(fontSize: 20),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    search = ModalRoute.of(context).settings.arguments;
-
+    // this.search = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -65,8 +86,9 @@ class _ResultPageState extends State<ResultPage> {
                       style: TextStyle(fontSize: 20),
                     ),
                     Container(
-                        // child: listaFilmes(),
-                        ),
+                      // child: Text("SOCORRO"),
+                      child: listaDeFilmes(),
+                    ),
                   ],
                 ),
               );
@@ -82,19 +104,6 @@ class _ResultPageState extends State<ResultPage> {
           },
         ),
       ),
-    );
-  }
-
-  listaFilmes() {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            resultado.movies[0].title,
-            style: TextStyle(fontSize: 20),
-          ),
-        );
-      },
     );
   }
 }
