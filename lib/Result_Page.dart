@@ -12,65 +12,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   Future<MovieList> futuraLista;
   String search;
-
-  @override
-  Widget build(BuildContext context) {
-    search = ModalRoute.of(context).settings.arguments;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          height: 30,
-          child: Image.asset('assets/img/clapperboard.png'),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15),
-              child: Text(
-                'Resultados de "$search":',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            FutureBuilder(
-              future: futuraLista,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: Text(
-                      "Exibindo ${snapshot.data.movies.length} resultados para $search:",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-
-                // By default, show a loading spinner.
-                return CircularProgressIndicator();
-              },
-            ),
-            /*  RaisedButton(
-              child: Text('Teste'),
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  '/movie',
-                  arguments:
-                      search, // <-- Mudar pra o nome do filme selecionado
-                );
-              },
-            ) */
-          ],
-        ),
-      ),
-    );
-  }
+  var resultado = new MovieList();
 
   Future<MovieList> _getMovieList() async {
     final response = await http
@@ -89,6 +31,71 @@ class _ResultPageState extends State<ResultPage> {
     futuraLista = _getMovieList();
 
     print(futuraLista);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    search = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Container(
+          height: 30,
+          child: Image.asset('assets/img/clapperboard.png'),
+        ),
+        centerTitle: true,
+      ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: FutureBuilder(
+          future: futuraLista,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              this.resultado = snapshot.data;
+              print(
+                  "O nome do primeiro filme e: ${this.resultado.movies[0].title}");
+              return Padding(
+                // Fazer aqui todo o resultado da página
+                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                child: Column(
+                  children: [
+                    Text(
+                      "Exibindo ${snapshot.data.movies.length} resultados para $search:",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Container(
+                        // child: listaFilmes(),
+                        ),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+
+            // By default, show a loading spinner.
+            return Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  listaFilmes() {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(
+            resultado.movies[0].title,
+            style: TextStyle(fontSize: 20),
+          ),
+        );
+      },
+    );
   }
 }
 //http://www.omdbapi.com/?apikey=5cd3eeca&s=$search -> Lista de filmes com aquele nome

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_selector/Result_Page.dart';
 
 class HomePage extends StatelessWidget {
   @override
