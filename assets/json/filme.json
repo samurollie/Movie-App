@@ -1,0 +1,40 @@
+{
+    "Title": "Shrek",
+    "Year": "2001",
+    "Rated": "PG",
+    "Released": "18 May 2001",
+    "Runtime": "90 min",
+    "Genre": "Animation, Adventure, Comedy, Family, Fantasy",
+    "Director": "Andrew Adamson, Vicky Jenson",
+    "Writer": "William Steig (based upon the book by), Ted Elliott, Terry Rossio, Joe Stillman, Roger S.H. Schulman, Cody Cameron (additional dialogue), Chris Miller (additional dialogue), Conrad Vernon (additional dialogue)",
+    "Actors": "Mike Myers, Eddie Murphy, Cameron Diaz, John Lithgow",
+    "Plot": "A mean lord exiles fairytale creatures to the swamp of a grumpy ogre, who must go on a quest and rescue a princess for the lord in order to get his land back.",
+    "Language": "English",
+    "Country": "USA",
+    "Awards": "Won 1 Oscar. Another 39 wins & 60 nominations.",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BOGZhM2FhNTItODAzNi00YjA0LWEyN2UtNjJlYWQzYzU1MDg5L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "Ratings": [
+        {
+            "Source": "Internet Movie Database",
+            "Value": "7.8/10"
+        },
+        {
+            "Source": "Rotten Tomatoes",
+            "Value": "88%"
+        },
+        {
+            "Source": "Metacritic",
+            "Value": "84/100"
+        }
+    ],
+    "Metascore": "84",
+    "imdbRating": "7.8",
+    "imdbVotes": "611,756",
+    "imdbID": "tt0126029",
+    "Type": "movie",
+    "DVD": "N/A",
+    "BoxOffice": "$267,665,011",
+    "Production": "DreamWorks SKG, Pacific Data Images (PDI)",
+    "Website": "N/A",
+    "Response": "True"
+}
