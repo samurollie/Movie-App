@@ -44,17 +44,36 @@ class _MovieInfoState extends State<MovieInfo> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           myMovie = snapshot.data;
-          return Text(
-            myMovie.title,
-            style: TextStyle(fontSize: 45),
-            textDirection: TextDirection.rtl,
+          return Column(
+            children: [
+              Container(
+                color: Colors.amberAccent,
+                width: double.infinity + 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${myMovie.title} (${myMovie.year})",
+                    style: TextStyle(fontSize: 40),
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: myMovieScreen(),
+              ),
+            ],
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return SizedBox(
+          height: 20,
+          width: 20,
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -63,14 +82,51 @@ class _MovieInfoState extends State<MovieInfo> {
     /* String poster_url =
         (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster; */
 
-    return Column(
+    return ListView(
       children: [
-        futureResponse(),
+        Container(
+          height: 10,
+        ),
         Container(
           width: 300,
           height: 300,
-          child: Image.network(
-              (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster),
+          child: Image.network((this.myMovie.poster == "N/A")
+              ? "https://via.placeholder.com/300x300?text=Not+Found"
+              : this.myMovie.poster),
+        ),
+        Container(
+          height: 10,
+        ),
+        Divider(
+          color: Colors.blueGrey,
+          thickness: 2.5,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 8),
+          child: Text(
+            "${this.myMovie.plot}",
+            textAlign: TextAlign.justify,
+          ),
+        ),
+        Divider(
+          color: Colors.blueGrey,
+          thickness: 2.5,
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 8),
+          child: Text(
+            "Genres: ${this.myMovie.genre}",
+            textDirection: TextDirection.ltr,
+          ),
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 8),
+          child: Text(
+            "${this.myMovie.actors}",
+            textAlign: TextAlign.start,
+          ),
         ),
       ],
     );
@@ -80,10 +136,17 @@ class _MovieInfoState extends State<MovieInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(movieTitle),
+        title: Container(
+          height: 30,
+          child: Image.asset('assets/img/clapperboard.png'),
+        ),
         centerTitle: true,
       ),
-      body: myMovieScreen(),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: futureResponse(),
+      ),
     );
   }
 }
