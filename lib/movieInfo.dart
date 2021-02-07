@@ -13,6 +13,7 @@ class MovieInfo extends StatefulWidget {
 class _MovieInfoState extends State<MovieInfo> {
   Future<Movie> futuroFilme;
   String movieTitle;
+  Movie myMovie;
 
   Future<Movie> _getMovie() async {
     final response = await http
@@ -37,6 +38,44 @@ class _MovieInfoState extends State<MovieInfo> {
     });
   }
 
+  Widget futureResponse() {
+    return FutureBuilder(
+      future: futuroFilme,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          myMovie = snapshot.data;
+          return Text(
+            myMovie.title,
+            style: TextStyle(fontSize: 45),
+            textDirection: TextDirection.rtl,
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  Widget myMovieScreen() {
+    /* String poster_url =
+        (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster; */
+
+    return Column(
+      children: [
+        futureResponse(),
+        Container(
+          width: 300,
+          height: 300,
+          child: Image.network(
+              (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +83,7 @@ class _MovieInfoState extends State<MovieInfo> {
         title: Text(movieTitle),
         centerTitle: true,
       ),
+      body: myMovieScreen(),
     );
   }
 }

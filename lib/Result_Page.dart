@@ -14,7 +14,6 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   Future<MovieList> futuraLista;
   String search;
-  var resultado = <Movie>[];
 
   Future<MovieList> _getMovieList() async {
     final response = await http
@@ -43,13 +42,13 @@ class _ResultPageState extends State<ResultPage> {
     print(futuraLista);
   }
 
-  Widget listaDeFilmes() {
+  Widget listaDeFilmes(List<Movie> resultado) {
     return ListView.builder(
       padding: EdgeInsets.all(16.0),
-      itemCount: this.resultado.length,
+      itemCount: resultado.length,
       itemBuilder: (context, i) {
         print(i);
-        return _buildRow(this.resultado[i]);
+        return _buildRow(resultado[i]);
       },
     );
   }
@@ -94,12 +93,21 @@ Ano de lançamento: ${movie.year}\n""",
       future: futuraLista,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          var resultado = <Movie>[];
+
           for (Movie i in snapshot.data.movies) {
-            this.resultado.add(i);
+            resultado.add(i);
           }
-          return Text(
-            "Exibindo resultados para '$search:'",
-            style: TextStyle(fontSize: 20),
+          return Column(
+            children: [
+              Text(
+                "Exibindo resultados para '$search:'",
+                style: TextStyle(fontSize: 20),
+              ),
+              Flexible(
+                child: listaDeFilmes(resultado),
+              ),
+            ],
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
@@ -127,14 +135,7 @@ Ano de lançamento: ${movie.year}\n""",
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.only(top: 15, bottom: 15),
-          child: Column(
-            children: [
-              futureResponse(),
-              Flexible(
-                child: listaDeFilmes(),
-              ),
-            ],
-          ),
+          child: futureResponse(),
         ),
       ),
     );
