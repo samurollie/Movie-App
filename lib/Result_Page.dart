@@ -46,6 +46,7 @@ class _ResultPageState extends State<ResultPage> {
   Widget listaDeFilmes() {
     return ListView.builder(
       padding: EdgeInsets.all(16.0),
+      itemCount: this.resultado.length,
       itemBuilder: (context, i) {
         print(i);
         return _buildRow(this.resultado[i]);
@@ -84,7 +85,7 @@ class _ResultPageState extends State<ResultPage> {
       """
 Titulo: ${movie.title}\n
 Ano de lançamento: ${movie.year}\n""",
-      style: TextStyle(fontSize: 15),
+      style: TextStyle(fontSize: 20),
     );
   }
 
@@ -97,7 +98,7 @@ Ano de lançamento: ${movie.year}\n""",
             this.resultado.add(i);
           }
           return Text(
-            "Exibindo ${this.resultado.length} resultados para $search:",
+            "Exibindo resultados para '$search:'",
             style: TextStyle(fontSize: 20),
           );
         } else if (snapshot.hasError) {
