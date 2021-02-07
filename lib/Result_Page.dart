@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_selector/Models/movieList.dart';
 
+import 'Models/movie.dart';
+
 class ResultPage extends StatefulWidget {
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -12,7 +14,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   Future<MovieList> futuraLista;
   String search;
-  var resultado = new MovieList();
+  var resultado = <Movie>[];
 
   Future<MovieList> _getMovieList() async {
     final response = await http
@@ -44,13 +46,66 @@ class _ResultPageState extends State<ResultPage> {
   Widget listaDeFilmes() {
     return ListView.builder(
       padding: EdgeInsets.all(16.0),
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            "resultado.movies[index].title,",
+      itemBuilder: (context, i) {
+        print(i);
+        return _buildRow(this.resultado[i]);
+      },
+    );
+  }
+
+  Widget _buildRow(Movie movie) {
+    /* String poster;
+    if (movie.poster != "NA") {
+      poster = movie.poster;
+    } */
+    return ListTile(
+      title: Text(
+        movie.title,
+        style: TextStyle(fontSize: 15),
+      ),
+      /* trailing: Container(
+        width: 120,
+        height: 120,
+        child: Image.network(poster),
+      ), */
+      onTap: () {
+        setState(() {
+          Navigator.of(context).pushNamed(
+            '/movie',
+            arguments: movie.title,
+          );
+        });
+      },
+    );
+  }
+
+  Widget myTileText(Movie movie) {
+    return Text(
+      """
+Titulo: ${movie.title}\n
+Ano de lançamento: ${movie.year}\n""",
+      style: TextStyle(fontSize: 15),
+    );
+  }
+
+  Widget futureResponse() {
+    return FutureBuilder(
+      future: futuraLista,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          for (Movie i in snapshot.data.movies) {
+            this.resultado.add(i);
+          }
+          return Text(
+            "Exibindo ${this.resultado.length} resultados para $search:",
             style: TextStyle(fontSize: 20),
-          ),
-        );
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
       },
     );
   }
@@ -69,44 +124,22 @@ class _ResultPageState extends State<ResultPage> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        child: FutureBuilder(
-          future: futuraLista,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              this.resultado = snapshot.data;
-              print(
-                  "O nome do primeiro filme e: ${this.resultado.movies[0].title}");
-              return Padding(
-                // Fazer aqui todo o resultado da página
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
-                child: Column(
-                  children: [
-                    Text(
-                      "Exibindo ${snapshot.data.movies.length} resultados para $search:",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Container(
-                      // child: Text("SOCORRO"),
-                      child: listaDeFilmes(),
-                    ),
-                  ],
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-
-            // By default, show a loading spinner.
-            return Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15),
-              child: CircularProgressIndicator(),
-            );
-          },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          child: Column(
+            children: [
+              futureResponse(),
+              Flexible(
+                child: listaDeFilmes(),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
 //http://www.omdbapi.com/?apikey=5cd3eeca&s=$search -> Lista de filmes com aquele nome
 //http://www.omdbapi.com/?apikey=5cd3eeca&t=$title -> O filme em si
 //http://www.omdbapi.com/?apikey=5cd3eeca&t=shrek -> Retorna Shrek, o filme
