@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'homePage.dart';
 import 'movieInfo.dart';
-import 'Result_Page.dart';
-import 'home_Page.dart';
+import 'resultPage.dart';
 
 class MyApp extends StatelessWidget {
   final secondaryColor = Color(0xff0745ff);
