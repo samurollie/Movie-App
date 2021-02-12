@@ -54,28 +54,33 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget _buildRow(Movie movie) {
-    /* String poster;
-    if (movie.poster != "NA") {
-      poster = movie.poster;
-    } */
-    return ListTile(
-      title: Text(
-        movie.title,
-        style: TextStyle(fontSize: 15),
+    String poster = (movie.poster == "N/A")
+        ? "https://via.placeholder.com/300x300?text=Not+Found"
+        : movie.poster;
+
+    return Card(
+      shadowColor: Colors.black,
+      elevation: 5,
+      child: ListTile(
+        // dense: true,
+        leading: Image.network(poster),
+        title: Text(
+          movie.title,
+          style: TextStyle(fontSize: 20),
+        ),
+        subtitle: Text(
+          movie.year,
+          style: TextStyle(fontSize: 15),
+        ),
+        onTap: () {
+          setState(() {
+            Navigator.of(context).pushNamed(
+              '/movie',
+              arguments: movie.title,
+            );
+          });
+        },
       ),
-      /* trailing: Container(
-        width: 120,
-        height: 120,
-        child: Image.network(poster),
-      ), */
-      onTap: () {
-        setState(() {
-          Navigator.of(context).pushNamed(
-            '/movie',
-            arguments: movie.title,
-          );
-        });
-      },
     );
   }
 
@@ -101,7 +106,7 @@ Ano de lançamento: ${movie.year}\n""",
           return Column(
             children: [
               Text(
-                "Exibindo resultados para '$search:'",
+                "Exibindo resultados para '$search':",
                 style: TextStyle(fontSize: 20),
               ),
               Flexible(
@@ -114,7 +119,13 @@ Ano de lançamento: ${movie.year}\n""",
         }
 
         // By default, show a loading spinner.
-        return CircularProgressIndicator();
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+          ],
+        );
       },
     );
   }
@@ -123,6 +134,7 @@ Ano de lançamento: ${movie.year}\n""",
   Widget build(BuildContext context) {
     // this.search = ModalRoute.of(context).settings.arguments;
     return Scaffold(
+      backgroundColor: Colors.deepOrange[300],
       appBar: AppBar(
         title: Container(
           height: 30,

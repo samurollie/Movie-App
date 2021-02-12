@@ -5,6 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     String _movieTitle = '';
     return Scaffold(
+      backgroundColor: Colors.deepOrange[300],
       appBar: AppBar(
         title: Text('Movie Info'),
         centerTitle: true,
@@ -19,48 +20,60 @@ class HomePage extends StatelessWidget {
               height: 150,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Image.asset('assets/img/clapperboard.png'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: Text(
-                'Bem vindo ao Movie Select!\nInsira abaixo o filme desejado:',
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Container(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Insira o nome do filme',
-                  border: OutlineInputBorder(),
+                child: Image.asset(
+                  'assets/img/clapperboard.png',
+                  width: 200,
+                  height: 200,
                 ),
-                onChanged: (text) {
-                  _movieTitle = text;
-                },
               ),
             ),
-            Container(
-              height: 15,
-            ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  '/result',
-                  arguments: _movieTitle,
-                );
-              },
-              child: Icon(
-                Icons.search,
-                color: Colors.white,
+            Card(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: 15,
+                      top: 15,
+                    ),
+                    child: Text(
+                      'Bem vindo ao Movie Info!\nInsira abaixo o filme desejado:',
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Insira o nome do filme',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (text) {
+                        _movieTitle = text;
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: 15,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        '/result',
+                        arguments: _movieTitle,
+                      );
+                    },
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    color: Color(0xff001dca),
+                  )
+                ],
               ),
-              color: Color(0xff001dca),
-            )
+            ),
           ],
         ),
       ),

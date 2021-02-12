@@ -44,35 +44,38 @@ class _MovieInfoState extends State<MovieInfo> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           myMovie = snapshot.data;
-          return Column(
-            children: [
-              Container(
-                color: Colors.amberAccent,
-                width: double.infinity + 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "${myMovie.title} (${myMovie.year})",
-                    style: TextStyle(fontSize: 40),
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.center,
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${myMovie.title} (${myMovie.year})",
+                      style: TextStyle(fontSize: 40),
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
+                  Flexible(
+                    child: myMovieScreen(),
+                  ),
+                ],
               ),
-              Flexible(
-                child: myMovieScreen(),
-              ),
-            ],
+            ),
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
 
         // By default, show a loading spinner.
-        return SizedBox(
-          height: 20,
-          width: 20,
-          child: CircularProgressIndicator(),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+          ],
         );
       },
     );
@@ -81,51 +84,73 @@ class _MovieInfoState extends State<MovieInfo> {
   Widget myMovieScreen() {
     /* String poster_url =
         (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster; */
+    String posterUrl = (this.myMovie.poster == "N/A")
+        ? "https://via.placeholder.com/300x300?text=Not+Found"
+        : this.myMovie.poster;
 
     return ListView(
       children: [
-        Container(
-          height: 10,
+        Divider(
+          color: Colors.deepOrange[300],
+          thickness: 5,
         ),
         Container(
-          width: 300,
-          height: 300,
-          child: Image.network((this.myMovie.poster == "N/A")
-              ? "https://via.placeholder.com/300x300?text=Not+Found"
-              : this.myMovie.poster),
+          // width: 300,
+          height: 280,
+          child: Image.network(posterUrl),
         ),
         Container(
           height: 10,
         ),
         Divider(
-          color: Colors.blueGrey,
-          thickness: 2.5,
+          color: Colors.deepOrange[300],
+          thickness: 5,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30, top: 8),
+          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
           child: Text(
             "${this.myMovie.plot}",
+            style: TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 15,
+            ),
             textAlign: TextAlign.justify,
           ),
         ),
         Divider(
-          color: Colors.blueGrey,
-          thickness: 2.5,
+          color: Colors.deepOrange[300],
+          thickness: 5,
         ),
         Padding(
-          padding:
-              const EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 8),
+          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
           child: Text(
-            "Genres: ${this.myMovie.genre}",
-            textDirection: TextDirection.ltr,
+            "Generos: ${this.myMovie.genre}",
+            style: TextStyle(fontSize: 15),
           ),
         ),
+        Divider(
+          color: Colors.deepOrange[300],
+          thickness: 5,
+        ),
         Padding(
-          padding:
-              const EdgeInsets.only(left: 30, right: 30, top: 8, bottom: 8),
+          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
           child: Text(
-            "${this.myMovie.actors}",
-            textAlign: TextAlign.start,
+            "Estrelando: ${this.myMovie.actors}",
+          ),
+        ),
+        Divider(
+          color: Colors.deepOrange[300],
+          thickness: 5,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("IMDB Rating: ${this.myMovie.imdbRating}"),
+              Text("IMDB ID: ${this.myMovie.imdbID}"),
+            ],
           ),
         ),
       ],
@@ -135,6 +160,7 @@ class _MovieInfoState extends State<MovieInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepOrange[300],
       appBar: AppBar(
         title: Container(
           height: 30,
