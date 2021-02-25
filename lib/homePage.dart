@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
                   'assets/img/clapperboard.png',
                   width: 200,
                   height: 200,
+                  semanticLabel: 'Claquete indicando o logotipo do Movie Info',
                 ),
               ),
             ),
@@ -68,8 +69,9 @@ class HomePage extends StatelessWidget {
                     child: Icon(
                       Icons.search,
                       color: Colors.white,
+                      semanticLabel: "Pesquisar filme",
                     ),
-                    color: Color(0xff001dca),
+                    color: Theme.of(context).accentColor,
                   )
                 ],
               ),

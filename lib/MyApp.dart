@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.deepOrange[300],
         accentColor: Color(0xff0745ff),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       initialRoute: '/',
       routes: {

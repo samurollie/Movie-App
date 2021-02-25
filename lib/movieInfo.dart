@@ -56,6 +56,8 @@ class _MovieInfoState extends State<MovieInfo> {
                       style: TextStyle(fontSize: 40),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
+                      semanticsLabel:
+                          "${myMovie.title} (${myMovie.year}.\nSinopse:${this.myMovie.plot}.\nGeneros: ${this.myMovie.genre}.\nEstrelando: ${this.myMovie.actors}.\nIMDB Rating: ${this.myMovie.imdbRating}.\nIMDB ID: ${this.myMovie.imdbID}.",
                     ),
                   ),
                   Flexible(
@@ -97,7 +99,10 @@ class _MovieInfoState extends State<MovieInfo> {
         Container(
           // width: 300,
           height: 280,
-          child: Image.network(posterUrl),
+          child: Image.network(
+            posterUrl,
+            semanticLabel: "Pôster do filme ${this.myMovie.title}",
+          ),
         ),
         Container(
           height: 10,
@@ -164,7 +169,10 @@ class _MovieInfoState extends State<MovieInfo> {
       appBar: AppBar(
         title: Container(
           height: 30,
-          child: Image.asset('assets/img/clapperboard.png'),
+          child: Image.asset(
+            'assets/img/clapperboard.png',
+            semanticLabel: "Movie Info",
+          ),
         ),
         centerTitle: true,
       ),

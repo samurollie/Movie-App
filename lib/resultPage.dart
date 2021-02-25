@@ -138,7 +138,10 @@ Ano de lançamento: ${movie.year}\n""",
       appBar: AppBar(
         title: Container(
           height: 30,
-          child: Image.asset('assets/img/clapperboard.png'),
+          child: Image.asset(
+            'assets/img/clapperboard.png',
+            semanticLabel: "Movie Info",
+          ),
         ),
         centerTitle: true,
       ),
