@@ -39,7 +39,7 @@ class _ResultPageState extends State<ResultPage> {
       futuraLista = _getMovieList();
     });
 
-    print(futuraLista);
+    // print(futuraLista);
   }
 
   Widget listaDeFilmes(List<Movie> resultado) {
@@ -47,7 +47,7 @@ class _ResultPageState extends State<ResultPage> {
       padding: EdgeInsets.all(16.0),
       itemCount: resultado.length,
       itemBuilder: (context, i) {
-        print(i);
+        // print(i);
         return _buildRow(resultado[i]);
       },
     );
@@ -84,22 +84,12 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Widget myTileText(Movie movie) {
-    return Text(
-      """
-Titulo: ${movie.title}\n
-Ano de lançamento: ${movie.year}\n""",
-      style: TextStyle(fontSize: 20),
-    );
-  }
-
   Widget futureResponse() {
     return FutureBuilder(
       future: futuraLista,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var resultado = <Movie>[];
-
           for (Movie i in snapshot.data.movies) {
             resultado.add(i);
           }
@@ -118,13 +108,15 @@ Ano de lançamento: ${movie.year}\n""",
           return Text("${snapshot.error}");
         }
 
-        // By default, show a loading spinner.
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-          ],
+        return Semantics(
+          label: "Aguarde, carregando resultados!",
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+            ],
+          ),
         );
       },
     );
@@ -132,16 +124,13 @@ Ano de lançamento: ${movie.year}\n""",
 
   @override
   Widget build(BuildContext context) {
-    // this.search = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: Colors.deepOrange[300],
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Container(
+        title: Image.asset(
+          'assets/img/clapperboard.png',
+          semanticLabel: "Movie Info",
           height: 30,
-          child: Image.asset(
-            'assets/img/clapperboard.png',
-            semanticLabel: "Movie Info",
-          ),
         ),
         centerTitle: true,
       ),

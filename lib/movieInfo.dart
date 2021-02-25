@@ -71,83 +71,52 @@ class _MovieInfoState extends State<MovieInfo> {
           return Text("${snapshot.error}");
         }
 
-        // By default, show a loading spinner.
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-          ],
+        return Semantics(
+          label: "Aguarde, carregando resultados!",
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+            ],
+          ),
         );
       },
     );
   }
 
   Widget myMovieScreen() {
-    /* String poster_url =
-        (this.myMovie.poster == "N/A") ? "" : this.myMovie.poster; */
     String posterUrl = (this.myMovie.poster == "N/A")
         ? "https://via.placeholder.com/300x300?text=Not+Found"
         : this.myMovie.poster;
 
     return ListView(
       children: [
-        Divider(
-          color: Colors.deepOrange[300],
-          thickness: 5,
-        ),
-        Container(
-          // width: 300,
+        Divider(),
+        Image.network(
+          posterUrl,
+          semanticLabel: "Pôster do filme ${this.myMovie.title}",
           height: 280,
-          child: Image.network(
-            posterUrl,
-            semanticLabel: "Pôster do filme ${this.myMovie.title}",
-          ),
         ),
         Container(
           height: 10,
         ),
-        Divider(
-          color: Colors.deepOrange[300],
-          thickness: 5,
+        Divider(),
+        MovieInfoPageText(
+          text: "${this.myMovie.plot}",
+          fontStyle: FontStyle.italic,
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-          child: Text(
-            "${this.myMovie.plot}",
-            style: TextStyle(
-              color: Colors.black,
-              fontStyle: FontStyle.italic,
-              fontSize: 15,
-            ),
-            textAlign: TextAlign.justify,
-          ),
+        Divider(),
+        MovieInfoPageText(
+          text: "Generos: ${this.myMovie.genre}",
+          fontStyle: FontStyle.normal,
         ),
-        Divider(
-          color: Colors.deepOrange[300],
-          thickness: 5,
+        Divider(),
+        MovieInfoPageText(
+          text: "Estrelando: ${this.myMovie.actors}",
+          fontStyle: FontStyle.normal,
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-          child: Text(
-            "Generos: ${this.myMovie.genre}",
-            style: TextStyle(fontSize: 15),
-          ),
-        ),
-        Divider(
-          color: Colors.deepOrange[300],
-          thickness: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-          child: Text(
-            "Estrelando: ${this.myMovie.actors}",
-          ),
-        ),
-        Divider(
-          color: Colors.deepOrange[300],
-          thickness: 5,
-        ),
+        Divider(),
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
           child: Row(
@@ -165,14 +134,12 @@ class _MovieInfoState extends State<MovieInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrange[300],
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Container(
+        title: Image.asset(
+          'assets/img/clapperboard.png',
+          semanticLabel: "Movie Info",
           height: 30,
-          child: Image.asset(
-            'assets/img/clapperboard.png',
-            semanticLabel: "Movie Info",
-          ),
         ),
         centerTitle: true,
       ),
@@ -180,6 +147,25 @@ class _MovieInfoState extends State<MovieInfo> {
         height: double.infinity,
         width: double.infinity,
         child: futureResponse(),
+      ),
+    );
+  }
+}
+
+class MovieInfoPageText extends StatelessWidget {
+  final String text;
+  final fontStyle;
+
+  MovieInfoPageText({Key key, @required this.text, @required this.fontStyle})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+      child: Text(
+        this.text,
+        style: TextStyle(fontSize: 15, fontStyle: this.fontStyle),
       ),
     );
   }

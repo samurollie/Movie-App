@@ -5,7 +5,6 @@ import 'movieInfo.dart';
 import 'resultPage.dart';
 
 class MyApp extends StatelessWidget {
-  final secondaryColor = Color(0xff0745ff);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,6 +13,15 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xff0745ff),
         iconTheme: IconThemeData(
           color: Colors.white,
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        dividerTheme: DividerThemeData(
+          color: Colors.deepOrange[300],
+          thickness: 5,
         ),
       ),
       initialRoute: '/',
