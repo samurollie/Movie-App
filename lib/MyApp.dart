@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           color: Colors.deepOrange[300],
           thickness: 5,
         ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
       routes: {
