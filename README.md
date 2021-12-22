@@ -1,8 +1,19 @@
-# movie_selector
+# Movie App
 
-A new Flutter project.
+<ol>
+    <li><a href="#sobre">Sobre</a></li>
+    <li> <a href="#especificacoes">Especificações</a></li>
+    <li> <a href="#comorodaroprojeto">Como Rodar o Projeto?</a> </li>
+    <li><a href="#licenca">Licença</a></li>
+</ol>
 
-## Getting Started
+<h2 id="sobre">Sobre</h2>
+
+Movie App é um aplicativo criado para testar os meus conhecimentos em Flutter. O aplicativo consume a API do OMDB
+
+<h2 id="especificacoes">Sobre</h2>
+
+O app 
 
 This project is a starting point for a Flutter application.
 
